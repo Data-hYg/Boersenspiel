@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>I got crippling depression</title>
+    <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- Material Kit CSS -->
+  <link href="assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+    <!--   Specifics    -->  
+    <script src="./assets/js/mainlogic.js"></script>
+</head>
+
+<body class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="danger" data-background-color="black" data-image="./assets/img/sidebar-4.jpg">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="https://github.com/hYg-Cain" class="simple-text logo-normal">
+          Crippling dept simulator
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item  ">
+            <a class="nav-link" href="./broker.html">
+              <i class="material-icons">dashboard</i>
+              <p>Broker</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./profile.html">
+              <i class="material-icons">person</i>
+              <p>Profile</p>              
+            </a>
+          </li>
+          <li class="nav-item active ">
+            <a class="nav-link" href="./howto.html">
+              <i class="material-icons">help</i>
+              <p>HowTo</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="restart" class="nav-link" href="./broker.html">
+              <i class="material-icons">restart_alt</i>
+              <p>Restart</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="endgame" class="nav-link" href="./gameend.html">
+              <i class="material-icons">cancel</i>
+              <p>End game</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="logout" class="nav-link" href="./index.html">
+                <i class="material-icons">logout</i>
+                <p>Logout</p>              
+              </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:void(0)">How to play</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">
+                  <i class="material-icons">notifications</i>
+                  <p class="d-lg-none d-md-block">
+                    Notifications
+                  </p>
+                </a>
+              </li>
+              <!-- your navbar here -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <!-- your content here -->
+          <div class="row">
+            <div class="tim-typo">
+              <h3 class="text-muted">Wanna feel the joys and dispaires of trading money at the stock market, but don't want to lose your actual money?</h3>
+              <p class="text-muted">Then you've come to the right place!</p>
+              <h2 class="text-muted">[Broker]</h2>
+              <h3 class="text-muted">How does it work?</h3>
+              <p class="text-muted">The game is played in the "Broker" tab. Once you navigated there, the game(-clock) starts. Here you can see your "Cash Balance" which is set to 50k € at the beginning of the round, as well as a "Holding" and a "Profit" Card.</p>
+              <p class="text-muted">The Cash balance resambles your bank account. The Holding card displays the amount of stocks you're currently holding and how much those are worth in total. The profit displays how much profit you made since the beginning of the game.</p>
+              <p class="text-muted">Each second the stock value changes with a 50/50 chance by a value of +/- 1to5</p>
+              <p class="text-muted">Below the Stock diagram you have the option to enter an amount. This amount is the value of how many stocks you want to buy or sell for the value the stock has at <b>time moment you press buy/sell.</b></p>
+        
+              <p class="text-muted">The game ends once 10 minutes have passed or you decide to end the game by clicking "End Game"</p>
+              <h3 class="text-muted">Special features</h3>
+              <p class="text-muted">&bull;&nbsp;&nbsp;&nbsp;&nbsp; Bullmarket: If the stock rises three times in a row the market is in a "Bullmarket" state. <span>&#8594;</span> The chances the stock rises again increases to 75% until it falls once.</p>
+              <p class="text-muted">&bull;&nbsp;&nbsp;&nbsp;&nbsp; Bearmarket: If the stock falls three times in a row the market is in a "Bearmarket" state. <span>&#8594;</span> The chances the sock falls again increases to 75% until it rises once.</p>
+              <p class="text-muted">&bull;&nbsp;&nbsp;&nbsp;&nbsp; Influencer: 60 seconds into the game Elons Musks starts tweeting about your stocks. Every second there is a 2% chance he tweets either positively or negatively. </p>
+                <p class="text-muted">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&#8594;</span> A tweet manipulates the market for the following 6 rounds. Your stock is now rising/falling with a 80% chance depending on the tweet and the value chances increase to 4-8 points instead of 1-5.</p>            
+              <p class="text-muted"></p>
+              <h2 class="text-muted">[Profile]</h2>
+              <h3 class="text-muted">What's that</h3>
+              <p class="text-muted">The profile displays your user related data as well as your current total account balance and a diagram showing the split of "Cash" and "Stocks"-value in your account.</p>
+              <p class="text-muted">Below that you'll find you acitivity history, which shows you all the transactions you did since the beginning of the current game.</p>
+              <p class="text-muted">Sidenote: As long as you're at your profile-tab the actual game pauses. So if you want to take a break or rethink your strategy...</p>
+              <h2 class="text-muted">[Restart]</h2>
+              <p class="text-muted">Resets the stock value, gametime, holding amount and account balance</p>
+              <h2 class="text-muted">[End Game]</h2>
+              <p class="text-muted">Prematurly ends the game and shows you how you've done.</p>
+              <h2 class="text-muted">[Logout]</h2>
+              <p class="text-muted">Logout and get redirected to the Login page. All game- and user-info will be deleted.</p>
+            </div>
+          </div>
+        </div>
+        <div  id="alertbar">
+        </div>
+      </div>
+      <footer class="footer">       
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>, adapted with <i class="material-icons">favorite</i> by
+            <a href="https://github.com/hYg-Cain" target="_blank">Timo Heyenga</a> for a better grade.
+          </div>
+          <!-- your footer here -->
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="./assets/js/core/jquery.min.js"></script>
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="https://unpkg.com/default-passive-events"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Chartist JS -->
+  <script src="./assets/js/plugins/chartist.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="./assets/js/material-dashboard.js?v=2.1.0"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>I got crippling depression</title>
+    <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- Material Kit CSS -->
+  <link href="assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+  <link href="assets/css/chart-stuff.css" rel="stylesheet" />
+    <!--   Specifics    -->
+    <script src="./assets/js/profile.js"></script>
+    <script src="./assets/js/mainlogic.js"></script>
+
+     <!--   Core JS Files   -->
+  <script src="./assets/js/core/jquery.min.js"></script>
+  <script src="./assets/js/core/popper.min.js"></script>
+  <script src="./assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="https://unpkg.com/default-passive-events"></script>
+  <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Chartist JS -->
+  <script src="./assets/js/plugins/chartist.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="./assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="./assets/js/material-dashboard.js?v=2.1.0"></script>
+</head>
+
+<body class="dark-edition">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="danger" data-background-color="black" data-image="./assets/img/sidebar-4.jpg">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="https://github.com/hYg-Cain" class="simple-text logo-normal">
+          Crippling dept simulator
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item  ">
+            <a class="nav-link" href="./broker.html">
+              <i class="material-icons">dashboard</i>
+              <p>Broker</p>              
+            </a>
+          </li>
+          <li class="nav-item active ">
+            <a class="nav-link" href="./profile.html">
+              <i class="material-icons">person</i>
+              <p>Profile</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="./howto.html">
+              <i class="material-icons">help</i>
+              <p>HowTo</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="restart" class="nav-link" href="./broker.html">
+              <i class="material-icons">restart_alt</i>
+              <p>Restart</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="endgame" class="nav-link" href="./gameend.html">
+              <i class="material-icons">cancel</i>
+              <p>End game</p>              
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a id="logout" class="nav-link" href="./index.html">
+                <i class="material-icons">logout</i>
+                <p>Logout</p>              
+              </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:void(0)">Profile</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:void(0)">
+                  <i class="material-icons">notifications</i>
+                  <p class="d-lg-none d-md-block">
+                    Notifications
+                  </p>
+                </a>
+              </li>
+              <!-- your navbar here -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+            <!-- your content here -->
+          <div class="row">
+            <div class="col-md-8">
+              <!--User profile-->
+              <div class="card ">
+                <div class="card-header  card-header-primary">
+                  <h4>User profile</h4>
+                  <p class="card-category">Infos about you</p>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label class="label">
+                          <i class="material-icons" >badge</i>
+                          Fullname:</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label id="namelabel" class="label"></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label class="label">
+                          <i class="material-icons">mail</i>
+                          Mail:</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label id="maillabel"></label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label class="label">
+                          <i class="material-icons">cake</i>
+                          Birthday: </label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="label-group no-border">
+                        <label id="birthdaylabel" class="label"></label>
+                      </div>
+                    </div>
+                  </div>
+               </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <!--pi chart with money overview-->
+
+              <div class="card card-chart">
+                <div class="card-header  card-header-primary">
+                  <h4>Cash balance</h4>
+                  <p class="card-category">Displays cash distribution</p>
+                </div>
+                <div class="ct-chart ct-golden-section ct-negative-labels" ></div>
+                <div class="card-body">
+                  <h4 id="piChartTitle" class="card-title"></h4>
+                  <p class="card-category">                  
+                </div>
+                <div class="card-footer">
+                </div>
+              </div>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-md-12">
+                <!--Buy/sell history-->
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4>Activity history</h4>
+                    <p class="card-category">Purchase/Sell history sorted decending by time</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <tr>
+                            <th>Activity</th>
+                            <th>Amount</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody id="ActivityTable">
+
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>      
+          <div  id="alertbar">
+
+          </div>
+        </div>
+      </div>
+      <footer class="footer">       
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>, adapted with <i class="material-icons">favorite</i> by
+            <a href="https://github.com/hYg-Cain" target="_blank">Timo Heyenga</a> for a better grade.
+          </div>
+          <!-- your footer here -->
+        </div>
+      </footer>
+    </div>
+  </div>
+ 
+
+</body>
+
+</html>

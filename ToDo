@@ -1,0 +1,16 @@
+#   Write HowTo
+#   Add "since last purchase" indicator
+#   Error when first page HowTo and then Profile. No cookies for cash etc. --> error
+#   RadioButton amount vs. worth => Stock 
+X #   profile page
+X #       user data
+X #       pi-chart doge-cash-total in center
+X #   Game ends logic missing
+X #   Tweets visible in notification
+
+
+#https://demos.creative-tim.com/material-dashboard-dark/docs/2.0/components/forms.html
+#https://getbootstrap.com/docs/4.0/components/alerts/
+#https://demos.creative-tim.com/material-dashboard-dark/examples/notifications.html
+#https://fonts.google.com/icons?selected=Material+Icons&icon.query=name
+#https://www.creative-tim.com/product/material-dashboard-dark#
