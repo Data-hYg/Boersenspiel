@@ -1,3 +1,14 @@
+/*
+
+Gamend logic - Class that handles the end of the game
+
+short overview:
+    - Checks user performance
+    - Redirects to either new game or login page
+
+ToDo:
+  - Add sidebar again. User wanted to check "how to" before restarting the game
+*/
 
 window.addEventListener("load", function(){
     

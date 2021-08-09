@@ -1,3 +1,20 @@
+
+/*
+
+Profile class. Loads user profile infos from cookies. 
+
+short overview:
+  - Userinfo
+  - Pi chart with doge to cash comp.
+  - Purchase/Sell History
+
+
+ToDo:
+  - Fix issue when accessing this page before the broker page
+  - Fix isse pi chart when doge or cash amount = 0. Also labeling in general doesn't look good
+*/
+
+
 window.addEventListener("load", function(){
     if(getCookie("fullname")==null){
         this.alert("Not logged in. Redirecting to login page.");
@@ -50,14 +67,14 @@ function UpdateUserInfo(){
     let year = birthday.getUTCFullYear();
     birthday = day + "." + month + "." + year;
     
-    let blanace =  parseFloat(getCookie("balance"));
+    let blanace =  Math.round(parseFloat(getCookie("balance"))*100)/100;
     let dogeholding = getCookie("dogeHolding");
     let dogevalue = JSON.parse(getCookie("dogeseries"));
 
-    let dogemoney = parseFloat(dogeholding * dogevalue[dogevalue.length - 1]);
+    let dogemoney = Math.round((parseFloat(dogeholding * dogevalue[dogevalue.length - 1]))*100)/100;
     let totalbalance = Math.round((blanace + dogemoney)*100)/100;
 
-    let labels = ["Dogecoin", "Cash"];
+    let labels = ["Stock: " + dogemoney + "€", "Cash: " + blanace + "€"];
     let series = [dogemoney, blanace];
 
     let color = "text-muted";
@@ -75,15 +92,19 @@ function UpdateUserInfo(){
 }
 
 function UpdateBalanceChart(glabels, gseries, txtID, balanceclass, addInfo="") {
+
     new Chartist.Pie('.ct-chart', {
         series: gseries,
         labels: glabels
+
       }, {
         donut: true,
         donutWidth: 60,
         donutSolid: true,
         startAngle: 270,
-        showLabel: true        
+        showLabel: true,    
+        labelOffset: 50,
+        labelDirection: 'explode'    
       });
       document.getElementById(txtID).className = balanceclass;
       document.getElementById(txtID).innerHTML = addInfo;

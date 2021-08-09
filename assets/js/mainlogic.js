@@ -1,9 +1,17 @@
 /*
- *Central logic 
- *  Cookies --> https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript
- *  Diagrams
- *  GameLogic...maybe. Maybe will be moved 
- */
+
+Central logic - here are all functions that are useful to all pages
+
+short overview:
+  - Cookie stuff based of --> https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript
+  - Alert/notification handeling
+  - Integar check
+
+
+ToDo:
+  - 
+*/
+
 
  window.addEventListener("load", function(){
     
@@ -65,6 +73,7 @@ function DeleteAllCookies() {
     }
 }
 
+//Reset game aka. delete all cookies
 function ResetGame(){
     deleteCookie("dogelables");
     deleteCookie("dogeValues");
@@ -75,7 +84,7 @@ function ResetGame(){
 }
 /**
  * 
- * Replaced by built in Sendalert function. Kept in case in comes in handy
+ * Replaced by built in Sendalert function. Kept in case it comes in handy
  * 
  * @param {primary, secondary, success, danger, warning, info, light, dark} type 
  * @param {Strong starting text} header 
@@ -96,6 +105,16 @@ function closeAlert(){
     $('.alert').alert('close');
 }
 
+
+/** 
+*
+* Tests if given value is an integar
+* First test if not NaN then test if has modulo
+*
+**/
+function isInt(n){
+    return !isNaN(n) && n % 1 === 0;
+}
 
 function AddNotification(text){
     let notcounter = 1;

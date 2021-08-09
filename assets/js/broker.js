@@ -1,8 +1,46 @@
+/*
+
+Game logic class. Holds all functionality for the actual game
+
+short overview:
+  - getter/Setter/Eventhandler on Properties changed
+  - Ticker
+    - Market behaviour 
+    - Influencer Logic    
+    - Update Stock
+    - Update Charts
+  - Buy/Sell  
+  - Fee Calc
+  - Cookie check
+
+Info:
+  - Ich habe mich bewusst entschieden nur den Geldkurs anzuzeigen, da der spread konstant ist. Es wäre immer die selben linie mit einer Differenz von 1.
+    Falls das aber abzüge geben sollte... 
+    1. zweites Array "briefkurs" analog zum dogeseries anlegen
+    2. Dieses in der PushToDogeSeriesArray inkludieren mit pushval -1
+    => In Zeile 432 besagtes array zusätzlich übergeben       series: [[gseries], [briefkurs]]
+    Das wars....
+
+    
+ToDo:
+  - Fix drift of gameclock to ticks when switching pages or closing game. 
+    This is due to the fact that it is possible to switch page or close the game in between clock ticks and stock changes
+    Game Clock does not get updated in the same function as the stock. Hit that window and they drift apart.
+      --> Could fake fix by limiting value array to 600 entries.... but 
+  - Find a good solution to automate the axis for an more intersting chart. 
+    The higher the value the less visible are changes because I fixed the 0 Y value.
+    Doing it dynamically looked even more confusing
+
+  - Same goes for theresponsive design. Once we hit 3 digits y Axis values and the screen is small...but not small enough to trigger the reduction of values, it does not look good
+*/
+
+
 ////  global stuff
 
 //  Game settings:
 let spread = -1;
 let gametime;
+let gamespeed = 1000; // clock ticker time in ms
 
 let dogebearmarket;
 let dogebullmarket
@@ -14,7 +52,7 @@ let influencerBoostChance = 0.02;
 let influencerBoost = false;
 let influencerTimespan = 6;
 
-//  Added getter and setter with mapped Listeners to update cookies on variable change
+//  Added getter and setter with mapped Listeners to update cookies on variable change. 
 //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#defining_getters_and_setters
 game = {
     balanceInternal: 0,
@@ -123,14 +161,15 @@ function PushToActivityHistoryArray(pushval){
   game.activityHistory = tmp;
 }
 
-
+// I actually really like this approach. Kinda reminds me of MVVM with an extra step
 game.balanceChangedListener(function (val) {
   //console.log("called balanced changed function: " + val);
   setCookie("balance", game.balance);    
 });
 game.gameTimeChangedListener(function (val) {
   //console.log("called balanced changed function: " + val);
-  setCookie("gameTime", game.gameTime);    
+  setCookie("gameTime", game.gameTime);
+  document.getElementById("gameclockID").innerHTML = game.gameTime;    
 });
 game.dogeHoldingChangedListener(function (val) {
   //console.log("called dogeholding changed function: " + val);
@@ -177,7 +216,7 @@ window.onunload = function() {
 
 
 
-//  Interval function that executes every x(5) seconds 
+//  Interval function that executes every x(1) second(s) 
 const interval = setInterval(function() {
     if(game.gameTime==0){     
       window.location.replace("./gameend.html");
@@ -186,7 +225,7 @@ const interval = setInterval(function() {
     if(!influencerBoost && game.gameTime < 540){ InfluencerTweet();}
     else {
       if(influencerTimespan > 0){influencerTimespan--;}
-      else{influencerBoost=false; influencerTimespan = 6; minStockChange = 1; maxStockChange = 5;}
+      else{influencerBoost=false; influencerTimespan = 6; ChangeStockChangeValues(1,5);}
     }
     UpdateDogeCoin();
     UpdateUserInfo(); 
@@ -197,7 +236,7 @@ const interval = setInterval(function() {
       md.showCustomNotification("top", "center","info", "info","Influencer now starting to tweet.");
     }
     game.gameTime = game.gameTime - 1;
-  }, 1000);
+  }, gamespeed);
 
 
 
@@ -206,13 +245,12 @@ const interval = setInterval(function() {
 function BuyDogeClicked(){
     //  get amount 
     let amount = document.getElementById("dogeAmount").value;
-
     //  check if userinput is ok
-    tstamount = parseInt(amount); //isNaN  fails for emtpy strings, so converting to int first.
-    if(isNaN(tstamount)){
+    if(!isInt(amount) || amount == ""){
       md.showCustomNotification("top", "center","warning", "warning_amber","Please enter a valid number.");
       return; 
     }
+
     //  get current price
     let dogeprice  = game.dogeSeries[game.dogeSeries.length -1 ];
     let fee = GetFee(dogeprice, amount); 
@@ -241,10 +279,8 @@ function SellDogeClicked(){
     // get amount 
     let amount = document.getElementById("dogeAmount").value;
     //  check if userinput is ok
-    tstamount = parseInt(amount); //isNaN  fails for emtpy strings, so converting to int first.
-    if(isNaN(tstamount)){
-      md.showCustomNotification("top", "center", "warning","warning_amber","Please enter a valid number.");
-      document.getElementById("dogeAmount").value = "";
+    if(!isInt(amount)  || amount == ""){
+      md.showCustomNotification("top", "center","warning", "warning_amber","Please enter a valid number.");
       return; 
     }
     if(amount > game.dogeHolding){
@@ -344,22 +380,46 @@ function UpdateDogeCoin(){
   else{
     market="[Manipulated]";
   }
-
+  let bidprice = game.dogeSeries[game.dogeSeries.length -1];
+  let sellprice;
+  if(bidprice >= 1 ){
+    sellprice = Math.round((bidprice -1) * 100)/100;
+  }
+  else{
+    sellprice = 0;
+  }
   //  Update charts and cookies
   UpdateChart('#dogeCoinChart', 'dogeSuc' ,game.dogeLabels, game.dogeSeries, market);    
-  document.getElementById('dogeTitle').innerHTML = "Dogecoin [ " + game.dogeSeries[game.dogeSeries.length -1] + "€ ]"
+  document.getElementById('dogeTitle').innerHTML = "Dogecoin [ Bid price: " + bidprice + "€ | Selling rate: " +  (bidprice -1) +  "€ ]";
 }
 
 function UpdateChart(chartname, txtID , glabels, gseries, addInfo="") {
     //  Calc change before array is sliced.
     let changeVal = Math.round((gseries[gseries.length-1] - gseries[0]) / (gseries[0]/100) *100) /100;    
 
-    //  isplay only lates 30 entries of series.     
-    if(gseries.length > 30 ){
-      glabels = glabels.slice(glabels.length -30);
+    //Check if device is on mobile. If so, slice it 10 values max. 
+    //userAgent check from here: https://dev.to/timhuang/a-simple-way-to-detect-if-browser-is-on-a-mobile-device-with-javascript-44j3
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+      // true for mobile device
+      if(gseries.length > 10 ){
+        glabels = glabels.slice(glabels.length -10);
+        gseries = gseries.slice(gseries.length -10);
+      }  
+    }else{
+      // false for not mobile device
+      //  Display only lates 30 entries of series.     
+      if(gseries.length > 30 ){
+        glabels = glabels.slice(glabels.length -30);
         gseries = gseries.slice(gseries.length -30);
-    }  
-    //  get min and max values to dynamically adapt min and max of chart
+      }  
+    }
+    
+    //TODO
+    // Find a good solution to automate the axis for an intersting chart. 
+    // The higher the value the less visible are changes because I fixed the 0 value.
+    // Doing it dynamically looked even more confusing
+    //   
+    // get min and max values to dynamically adapt min and max of chart
     // minVal not used. Unsure what looks better. 
     let maxVal = Math.max.apply(null, gseries) + 20;
     if(maxVal < 100) {maxVal = 100;}
@@ -420,7 +480,7 @@ function GetRandomStockFactor(min, max){
 
 
 /**
- * With a probability of "influencerBoostChance" (Default 2%) and with a 50/50 positiv/negativ chance an influencer posts a tweet about dogecoin --> extreme change for next 10 rounds
+ * With a probability of "influencerBoostChance" (Default 2%) and with a 50/50 positiv/negativ chance an influencer posts a tweet about dogecoin --> extreme change for next 6 rounds
  */
 function InfluencerTweet(){  
   let check = Math.round(Math.random()*100)/100;
@@ -437,12 +497,12 @@ function InfluencerTweet(){
 
 /**
  * "sends" a negativ or positiv tweet
- * increases chances and value change for next 7 ticks
+ * increases chances and value change 
  */
 function SendTweet(isPositiv){
   influencerBoost = true;
-  minStockChange = 4;
-  maxStockChange = 8;
+  ChangeStockChangeValues(4,8);
+
   let influence = "negative";
   let thumb  = "thumb_down_off_alt";
   if(isPositiv){
@@ -457,6 +517,11 @@ function SendTweet(isPositiv){
   }
   AddNotification('Elon Musk posted a '+influence+ ' tweet about dogecoin');
   md.showCustomNotification("top", "right", type, thumb ,'Elon Musk posted a '+influence+ ' tweet about dogecoin.\nMarkt manipulated for 6 rounds.');
+}
+
+function ChangeStockChangeValues(minStock, maxStock){
+  minStockChange = minStock;
+  maxStockChange = maxStock;
 }
 
 /**
@@ -476,6 +541,7 @@ function GetFee(price, amount){
   else{
     fee = price * amount * 0.0025 + fee;
   }
+  fee = Math.round(fee*100)/100
   return fee;
 }
 
@@ -526,7 +592,7 @@ function CheckCookies(){
       game.dogeSeries = [100]; 
       game.balance = 50000; // Default bank balance
       game.dogeHolding = parseFloat(0);
-      game.gameTime = 600; //  Game has 10min.
+      game.gameTime = 599; //  Game has 10min.
     }
     else{      
       console.log("Cookies found: ");
