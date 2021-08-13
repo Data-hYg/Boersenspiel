@@ -20,7 +20,12 @@ Info:
     2. Dieses in der PushToDogeSeriesArray inkludieren mit pushval -1
     => In Zeile 432 besagtes array zusätzlich übergeben       series: [[gseries], [briefkurs]]
     Das wars....
-
+    
+    Thema Marktmanipulation:
+    - Macht wenig Sinn dass sich der Wert der Aktie auch um einen hohen Wert entgegengesetzt der aktuellen Manipulation ändert. 
+      Manchmal ist der Markt positiv manipulaiert aber 2x in Folge verliert die Aktie 8€. Ist etwas "dumm", aber code wie gedacht - kein Fehler.
+    - Die Wahrscheinlichkeit ist 2%, aber ich habe den Eindruck Tweets treten zu häufig ein. 
+      Entweder hab ich einen Bug, oder die Random Funktion von JS ist besonders schlecht
     
 ToDo:
   - Fix drift of gameclock to ticks when switching pages or closing game. 
